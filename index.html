@@ -141,6 +141,40 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tq .key{font-weight:700;color:var(--ok)}
 @media (max-width:820px){.grid2,.lab,.lab.wide,.grid3,ul.links{grid-template-columns:minmax(0,1fr)}.vocab{grid-template-columns:1fr 1fr}.steps6{grid-template-columns:repeat(3,1fr)}
   nav.units,.stages{grid-template-columns:1fr 1fr}.read{grid-template-columns:1fr 1fr}}
+
+.bench{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 14px}
+.bench button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;text-align:left;font-weight:700}
+.bench button small{display:block;color:var(--mute);font-size:.72rem}
+.bench button[aria-current=true]{border-color:var(--acc);background:var(--acc2);box-shadow:0 3px 0 var(--acc)}
+.gz>h3{font-size:1.25rem;margin:8px 0 4px}.gzq{margin:4px 0 12px}
+.pred{background:#fff8e1;border:1px solid #f2d27a;border-radius:10px;padding:10px 12px;margin-bottom:14px}
+.pred textarea{width:100%;min-height:56px;border:1px solid var(--line);border-radius:8px;padding:8px;margin-top:6px;background:#fff;resize:vertical}
+.gz canvas{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:12px}.gz svg{max-width:100%}
+.gzcheck{border-top:2px dashed var(--line);margin-top:18px;padding-top:12px}.gzcheck h4{margin-bottom:8px}
+.tin{border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:#fff;max-width:100%}
+.tscroll{overflow-x:auto}
+.nbbtn{border:0;background:#f2b705;color:#17312c;border-radius:999px;padding:8px 16px;font-weight:700;margin-left:auto}
+#nb{position:fixed;inset:0;z-index:50;background:#17312ccc;overflow:auto;padding:24px 12px}
+.nbin{max-width:960px;margin:0 auto;background:var(--card);border-radius:16px;padding:20px}
+.nbhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}.nbhead h2{margin-bottom:4px}
+.nbsec{margin:16px 0}.nbsec h3{margin-bottom:6px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:#17312c;color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.rta{user-select:none;-webkit-user-select:none;cursor:pointer;min-height:190px;border-radius:14px;display:grid;place-items:center;text-align:center;font-size:1.3rem;background:#e7e2d4;margin:10px 0;border:3px solid var(--line);padding:10px;touch-action:manipulation}
+.rta.wait{background:#c0392b;color:#fff}.rta.go{background:#1d9a50;color:#fff}.rta.snd{background:#46607f;color:#fff}.rta.bad{background:#fbe9e7;color:var(--warn)}.rta.done{background:var(--acc2)}
+.case .cshead{display:flex;gap:12px;align-items:center;margin:12px 0}.case .cshead p{margin:2px 0}.case .av{font-size:2.6rem}
+.clue{background:#eef4f7;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:.92rem}.step{margin:14px 0 6px}
+.mys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.mcard{border:2px solid var(--line);border-radius:12px;padding:10px;background:#fff;font-size:.9rem;display:flex;flex-direction:column;align-items:flex-start}
+.mcard p{margin:4px 0;flex:1}.mcard .ans{flex:0;color:var(--acc)}
+.mcard.ok{border-color:var(--ok);background:#eef8f1}.mcard.no{border-color:var(--warn);background:#fdf1ef}
+.walk{border:2px solid var(--acc);border-radius:12px;padding:14px;background:var(--acc2);margin:10px 0}
+.kq{font-size:1.2rem;font-weight:700;font-family:ui-rounded,"Trebuchet MS",sans-serif;margin:8px 0}
+.fullkey li{margin:6px 0}.fullkey span{color:var(--mute);font-size:.9rem}
+.kb label{display:block;margin:6px 0}.kb input.tin{width:100%;margin-top:4px}.kbr{background:var(--acc2);border-radius:10px;padding:10px}
+@media (max-width:820px){.bench,.mys{grid-template-columns:minmax(0,1fr)}}
+@media print{body[data-print=nb]{overflow:visible!important}body[data-print=nb] header.top,body[data-print=nb] nav.units,body[data-print=nb] main,body[data-print=nb] footer,body[data-print=nb] #teacher{display:none!important}
+ body[data-print=nb] #nb{position:static;background:none;padding:0;display:block!important;overflow:visible}body[data-print=nb] .nbtools,body[data-print=nb] #toast{display:none}body:not([data-print=nb]) #nb{display:none!important}}
 @media (prefers-reduced-motion:reduce){#heartS,.lung,.flow,.air,.quake{animation:none}}
 @media print{header.top,nav.units,main,footer{display:none}#teacher{display:block!important;border:0}
  body[data-print=test] main{display:block}body[data-print=test] main>:not(.testcard){display:none}body[data-print=test] #teacher{display:none!important}body[data-print=test] .testcard .row{display:none}}
@@ -358,7 +392,7 @@ function testCard(u,kind){
 
 /* ---------- state ---------- */
 const KEY='vsh56-v1';
-let S={track:'5',unit:0,stage:0,done:{},notes:{},crit:{},circ:{},tests:{}};
+let S={track:'5',unit:0,stage:0,done:{},notes:{},crit:{},circ:{},tests:{},nb:{},bench:{}};
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)S=Object.assign(S,s);else{const m=monthIdx();if(m>=0)S.unit=MONTHS[m][1]}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function monthIdx(){const m=new Date().getMonth();return m>=8?m-8:m<=5?m+4:-1}
@@ -431,7 +465,7 @@ function boot(){
   if(d.done){S.done[d.done]=e.target.checked;save();render(true)}
   if(d.crit){S.crit[d.crit]=e.target.checked;save()}
   if(d.tq!==undefined){tst(d.tk).ans[d.tq]=+e.target.value;save()}});
- render();
+ nbSetup();render();
 }
 function onClick(e){
  const t=e.target.closest('button,[data-goto]');if(!t)return;const d=t.dataset;
@@ -442,6 +476,8 @@ function onClick(e){
  else if(d.flip!==undefined){const c=curC().vocab[+d.flip];const on=t.classList.toggle('on');t.textContent=on?c[1]:c[0]}
  else if(d.q!==undefined){const q=curC().quiz[+d.q],box=t.closest('.q');box.querySelectorAll('button').forEach(b=>b.className='');
    const ok=+d.a===q.c;t.className=ok?'right':'wrong';$('.why',box).textContent=(ok?'Correct. ':'Not yet. Try again. ')+(ok?q.why:'')}
+ else if(d.bench!==undefined){S.bench=S.bench||{};S.bench[UNITS[S.unit].id+'-'+S.track]=+d.bench;save();render(true)}
+ else if(d.cq){const q=CHK[d.cq][+d.ci],box=t.closest('.q');box.querySelectorAll('button').forEach(b=>b.className='');const ok=+d.a===q[2];t.className=ok?'right':'wrong';$('.why',box).textContent=ok?'Correct. '+q[3]:'Not yet. Try again.'}
  else if(d.tsub){const tt=tst(d.tsub),Q=T[UNITS[S.unit].id][S.track][d.kind],miss=Q.map((q,i)=>i+1).filter(i=>tt.ans[i-1]===undefined);
    if(miss.length){$('#tmsg').textContent='Answer every question before you submit. Still to do: '+miss.join(', ');return}
    tt.done=true;tt.tries=(tt.tries||0)+1;tt.date=new Date().toLocaleDateString('en-CA');save();render(true);$('#test').scrollIntoView()}
@@ -464,7 +500,8 @@ function render(keep){
  h+='<div class="goal"><b>We are learning to</b> '+c.goals[S.stage]+'.'+(S.stage===0?'<br><span class="note">Big idea: '+c.big+'</span>':'')+'</div>';
  h+=[stage1,stage2,stage3,stage4][S.stage](c,u);
  app.innerHTML=h;
- if(S.stage===2){const el=$('#lab');({'u1-5':labBody,'u1-6':labWeb,'u2-5':labMatter,'u2-6':labCircuit,'u3-5':labBridge,'u3-6':labFlight,'u4-5':labGrid,'u4-6':labSpace})[u.id+'-'+S.track](el)}
+ const bk=u.id+'-'+S.track;if(S.stage===2)BENCH[bk][benchIdx(bk)][2]($('#lab'));
+ ((EXTRA[bk]||{})[S.stage]||[]).forEach(a=>a[1](app.querySelector('[data-act="'+a[0]+'"]')));
  if(keep)scrollTo(0,y);
 }
 function placeholder(u){
@@ -491,13 +528,13 @@ function esc(s){return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 function stage1(c,u){
  return '<div class="card"><h3>Vocabulary cards</h3><p class="note">Tap a card to flip it. Try to say the meaning before you look.</p><div class="vocab">'+c.vocab.map((v,i)=>'<button data-flip="'+i+'">'+v[0]+'</button>').join('')+'</div></div>'+
  '<div class="card"><h3>Quick check</h3>'+c.quiz.map((q,i)=>'<div class="q"><p>'+(i+1)+'. '+q.q+'</p><div class="opts">'+q.a.map((a,j)=>'<button data-q="'+i+'" data-a="'+j+'">'+a+'</button>').join('')+'</div><p class="why" aria-live="polite"></p></div>').join('')+'</div>'+
- videos(c,u)+mission(c,0);
+ extraHTML(u,0)+videos(c,u)+mission(c,0);
 }
 function stage2(c,u){
  return videos(c,u)+'<div class="card"><h3>Canadian science links</h3><ul class="links">'+c.links.map(l=>'<li><a target="_blank" rel="noopener" href="'+l[1]+'">'+l[0]+' ↗</a><br>'+l[2]+'</li>').join('')+'</ul>'+
- '<p class="note" style="margin-top:10px">Research tip: write down the name of the website and the date you visited, so you can credit your source.</p></div>'+mission(c,1)+testCard(u,'mid');
+ '<p class="note" style="margin-top:10px">Research tip: write down the name of the website and the date you visited, so you can credit your source.</p></div>'+extraHTML(u,1)+mission(c,1)+testCard(u,'mid');
 }
-function stage3(c,u){return '<div class="card"><div id="lab"></div></div>'+mission(c,2)+videos(c,u)}
+function stage3(c,u){const k=u.id+'-'+S.track,B=BENCH[k],i=benchIdx(k);return '<div class="card">'+(B.length>1?'<p class="note" style="margin:0 0 6px"><b>Lab bench:</b> '+B.length+' labs for this unit. Choose one.</p><div class="bench" role="tablist" aria-label="Lab bench">'+B.map((b,j)=>'<button data-bench="'+j+'" aria-current="'+(j===i)+'"><small>Lab '+String.fromCharCode(65+j)+'</small>'+b[1]+'</button>').join('')+'</div>':'')+'<div id="lab"></div></div>'+mission(c,2)+videos(c,u)}
 function stage4(c,u){
  const ch=c.ch,k=u.id+'-g'+S.track+'-c';
  return '<div class="card"><span class="pill">STEM Challenge</span><h3 style="margin-top:8px;font-size:1.3rem">'+ch.t+'</h3><p>'+ch.brief+'</p>'+
@@ -565,7 +602,7 @@ function labBody(el){
  svg.addEventListener('click',e=>{const g=e.target.closest('.org');if(!g)return;org=g.dataset.org;sel=BODY.org[org][0];upd()});
  $('#bsys',el).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sel=b.dataset.s||null;org=null;upd()});
  $('#bx',el).addEventListener('input',e=>{x=+e.target.value;upd()});
- $('#brec',el).onclick=()=>{if(!BODY.log.some(r=>r[0]===lv()))BODY.log.push([lv(),hr(),br()]);upd()};
+ $('#brec',el).onclick=()=>{nbAdd('g5-body','Body Systems Simulator',['Activity level','Heart rate (bpm)','Breaths per minute'],[lv(),hr(),br()]);if(!BODY.log.some(r=>r[0]===lv()))BODY.log.push([lv(),hr(),br()]);upd()};
  $('#bclr',el).onclick=()=>{BODY.log=[];upd()};
  upd();
 }
@@ -577,7 +614,7 @@ function labWeb(el){
  '<div class="row" id="wsc">'+Object.keys(WEB.sc).map(k=>'<button class="btn sm ghost" data-sc="'+k+'">'+WEB.sc[k].n+'</button>').join('')+'</div>'+
  '<div class="lab wide"><div><svg id="wsvg" viewBox="0 0 700 450" role="img" aria-label="Food web of an Ontario forest"></svg></div><div>'+
  '<div class="read" style="grid-template-columns:1fr 1fr"><div><small>Year</small><b id="wy"></b></div><div><small>Forest health</small><b id="wh"></b>/100</div></div>'+
- '<div class="row"><button class="btn sm" id="w1">Next year ▶</button><button class="btn sm" id="w5">Run 5 years ▶▶</button><button class="btn sm ghost" id="wact">Take action</button><button class="btn sm ghost" id="wr">Reset</button></div>'+
+ '<div class="row"><button class="btn sm" id="w1">Next year ▶</button><button class="btn sm" id="w5">Run 5 years ▶▶</button><button class="btn sm ghost" id="wact">Take action</button><button class="btn sm ghost" id="wr">Reset</button><button class="btn sm ghost" id="wrec">Record this year</button></div>'+
  '<div id="winfo" aria-live="polite"></div><svg id="wchart" viewBox="0 0 300 120" role="img" aria-label="Forest health over time" style="margin-top:8px"></svg>'+
  '<p class="note">This is a simplified model. Real forests have thousands of species, and real populations also change with weather, disease and people.</p></div></div>';
  function draw(){
@@ -605,6 +642,7 @@ function labWeb(el){
  $('#w1',el).onclick=()=>{webStep(st);draw()};
  $('#w5',el).onclick=()=>{for(let i=0;i<5;i++)webStep(st);draw()};
  $('#wr',el).onclick=()=>{st=webNew(st.sc);draw()};
+ $('#wrec',el).onclick=()=>{const low=Object.keys(st.pop).filter(k=>st.pop[k]<40).map(k=>WEB.sp[k][0]);nbAdd('g6-web','Food-Web Simulator',['Scenario','Year','Forest health','Invader level','Species below 40'],[WEB.sc[st.sc].n,st.year,webHealth(st),WEB.sc[st.sc].hits?Math.round(st.inv):'—',low.join(', ')||'none'])};
  $('#wact',el).onclick=()=>{if(st.noWolf){st.noWolf=false;st.pop.wolf=Math.max(st.pop.wolf,15)}else st.inv*=0.35;draw()};
  draw();
 }
@@ -612,7 +650,7 @@ function labWeb(el){
 /* ---------- LAB 3: states of matter (Grade 5) ---------- */
 function labMatter(el){
  el.innerHTML='<h3>Lab: Particle View of Heating and Cooling</h3><p class="note">You are looking at a tiny sample of water, magnified millions of times. Add or remove heat and watch the particles.</p><div class="lab"><div><canvas id="mcv" width="380" height="300" role="img" aria-label="Animated particles in a container"></canvas></div><div>'+
- '<div class="row"><button class="btn sm" data-m="1">🔥 Heat</button><button class="btn sm ghost" data-m="0">Pause</button><button class="btn sm" data-m="-1" style="background:#2e6fb0;border-color:#2e6fb0">❄ Cool</button></div>'+
+ '<div class="row"><button class="btn sm" data-m="1">🔥 Heat</button><button class="btn sm ghost" data-m="0">Pause</button><button class="btn sm" data-m="-1" style="background:#2e6fb0;border-color:#2e6fb0">❄ Cool</button><button class="btn sm ghost" id="mrec">Record this moment</button></div>'+
  '<label for="me"><b>Thermal energy in the sample</b></label><input type="range" id="me" min="0" max="280" step="1" value="10"><div class="scale"><span>less</span><span>more</span></div>'+
  '<div class="read"><div><small>Temperature</small><b id="mt"></b> °C</div><div><small>State</small><b id="ms" style="font-size:1rem"></b></div><div><small>Heat is</small><b id="mh" style="font-size:1rem"></b></div></div>'+
  '<div class="alert info" id="mdesc" aria-live="polite"></div>'+
@@ -656,6 +694,7 @@ function labMatter(el){
  }
  el.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(b)mode=+b.dataset.m});
  $('#me',el).addEventListener('input',e=>{E=+e.target.value;mode=0});
+ $('#mrec',el).onclick=()=>nbAdd('g5-matter','Particle Lab: Heating and Cooling',['Thermal energy (0–280)','Temperature (°C)','State','Heat'],[Math.round(E),Math.round(matterT(E)),$('#ms',el).textContent,$('#mh',el).textContent]);
  requestAnimationFrame(tick);
 }
 
@@ -670,7 +709,7 @@ function labCircuit(el){
  '<div class="lab wide"><div><svg id="csvg" viewBox="0 0 660 360" aria-label="Circuit board"></svg></div><div>'+
  '<div class="read" style="grid-template-columns:1fr 1fr"><div><small>Battery</small><b id="cv"></b> V</div><div><small>Current from battery</small><b id="ci"></b> A</div></div>'+
  '<div id="ctype" class="alert info" aria-live="polite"></div><b>Lab challenges</b><ul class="check" id="cch"></ul>'+
- '<div class="row"><button class="btn sm ghost" id="creset">Reset board</button></div>'+
+ '<div class="row"><button class="btn sm ghost" id="creset">Reset board</button><button class="btn sm" id="crec">Record this circuit</button></div>'+
  '<p class="note">Brightness is compared with one bulb on one cell (100%). Yellow dots show current flowing; faster dots mean more current. This model uses ideal parts. Only ever build real circuits with batteries, never with a wall outlet.</p></div></div>';
  const svg=$('#csvg',el);
  const CH=[['c1','Light one bulb',r=>r.lit>=1],['c2','Build a series circuit that lights two bulbs',r=>r.state==='ok'&&r.lit>=2&&r.paths===1],
@@ -729,6 +768,7 @@ function labCircuit(el){
  tray.addEventListener('click',e=>{const b=e.target.closest('[data-tool]');if(b&&e.detail===0){CIRC.tool=CIRC.tool===b.dataset.tool?null:b.dataset.tool;draw()}});
  $('#cm',el).onclick=()=>{CIRC.cells=Math.max(1,CIRC.cells-1);draw()};
  $('#cp',el).onclick=()=>{CIRC.cells=Math.min(3,CIRC.cells+1);draw()};
+ $('#crec',el).onclick=()=>{const r=draw.r;nbAdd('g6-circuit','Circuit Builder',['Cells','Circuit','Current (A)','Bulbs lit','Brightness of each bulb'],[CIRC.cells,r.type,r.state==='short'?'short circuit':r.I.toFixed(2),r.lit||0,Object.keys(r.pct).map(k=>CNAME[k]+': '+r.pct[k]+'%').join('; ')||'none'])};
  $('#creset',el).onclick=()=>{CIRC.cells=1;CIRC.sw={};CIRC.slots={s1:'wire',s2:'wire',a1:'bulb',a2:'wire',b1:null,b2:'wire',c1:null,c2:'wire'};draw()};
  draw();
 }
@@ -804,7 +844,7 @@ function labBridge(el){
  $('#gp',el).value=P;$('#gx',el).value=pos*100;$('#gw',el).value=wind;$('#gq',el).value=quake;
  el.addEventListener('input',e=>{const i=e.target.id,v=+e.target.value;if(i==='gp')P=v;else if(i==='gx')pos=v/100;else if(i==='gw')wind=v;else if(i==='gq')quake=v;else return;draw()});
  $('#gtype',el).addEventListener('click',e=>{const b=e.target.closest('[data-bt]');if(b){type=b.dataset.bt;draw()}});
- $('#grec',el).onclick=()=>{const r=draw();BR.log.push([BR.name[type],P+' t',wind+' km/h',Q[quake],r.stress+'%',r.status==='fail'?'Fails':r.status==='warn'?'Near limit':'Safe']);if(BR.log.length>12)BR.log.shift();draw()};
+ $('#grec',el).onclick=()=>{const r=draw();BR.log.push(nbRow('g5-bridge','Bridge Stress Tester',['Bridge','Load','Wind','Earthquake','Stress','Result'],[BR.name[type],P+' t',wind+' km/h',Q[quake],r.stress+'%',r.status==='fail'?'Fails':r.status==='warn'?'Near limit':'Safe']));if(BR.log.length>12)BR.log.shift();draw()};
  $('#gclr',el).onclick=()=>{BR.log=[];draw()};
  draw();
 }
@@ -852,7 +892,7 @@ function labFlight(el){
  }
  $('#fp',el).value=pitch;$('#ft',el).value=thr;$('#fd',el).value=drg;$('#fw',el).value=w;
  el.addEventListener('input',e=>{const i=e.target.id,v=+e.target.value;if(i==='fp')pitch=v;else if(i==='ft')thr=v;else if(i==='fd')drg=v;else if(i==='fw')w=v;else return;draw()});
- $('#frec',el).onclick=()=>{const r=draw();FL.log.push([pitch+'°',thr+'%',drg,w+' kN',Math.round(r.v)+' km/h',(r.L/1000).toFixed(1)+' kN',(r.D/1000).toFixed(2)+' kN',{none:'No airflow',stall:'Stall',climb:'Rising',descend:'Sinking',level:'Lift = weight'}[r.status]]);if(FL.log.length>12)FL.log.shift();draw()};
+ $('#frec',el).onclick=()=>{const r=draw();FL.log.push(nbRow('g6-flight','Four Forces Wind Tunnel',['Pitch','Thrust','Drag control','Weight','Air speed','Lift','Drag','Result'],[pitch+'°',thr+'%',drg,w+' kN',Math.round(r.v)+' km/h',(r.L/1000).toFixed(1)+' kN',(r.D/1000).toFixed(2)+' kN',{none:'No airflow',stall:'Stall',climb:'Rising',descend:'Sinking',level:'Lift = weight'}[r.status]]));if(FL.log.length>12)FL.log.shift();draw()};
  $('#fclr',el).onclick=()=>{FL.log=[];draw()};
  draw();
 }
@@ -883,7 +923,7 @@ function labGrid(el){
  Object.keys(GR.src).map(k=>'<label for="r'+k+'"><b style="color:'+GR.src[k][1]+'">■</b> <b>'+GR.src[k][0]+'</b> ('+(GR.src[k][2]?'R':'N')+'): <span id="r'+k+'v"></span></label><input type="range" id="r'+k+'" data-cap="'+k+'" min="0" max="'+GR.src[k][3]+'" step="1">').join('')+
  '<label for="rcons"><b>Conservation:</b> everyone uses <span id="rconsv"></span> less</label><input type="range" id="rcons" min="0" max="20" step="1" value="0"></div></div>'+
  '<div class="read" style="grid-template-columns:repeat(4,1fr)"><div><small>Hours demand met</small><b id="rm"></b>/24</div><div><small>Renewable share</small><b id="rr"></b>%</div><div><small>CO₂ released</small><b id="rc"></b> kt</div><div><small>Cost points</small><b id="rk"></b></div></div>'+
- '<div id="rmsg" class="alert info" aria-live="polite"></div>'+
+ '<div id="rmsg" class="alert info" aria-live="polite"></div><button class="btn sm" id="rrec">Record this day</button>'+
  '<p class="note">A learning model with rounded numbers, loosely based on Ontario\'s grid. Nuclear runs steadily all day, wind and solar depend on the weather, hydro and natural gas can be turned up and down, and only natural gas releases CO₂ while running. Cost points combine building and fuel costs and are for comparing your own designs only.</p>';
  function draw(){
   const r=gridModel(cap,season,calm,cons),y=v=>280-v*10,bw=22;
@@ -907,6 +947,7 @@ function labGrid(el){
  }
  el.addEventListener('input',e=>{const k=e.target.dataset.cap;if(k)cap[k]=+e.target.value;else if(e.target.id==='rcons')cons=+e.target.value;else return;draw()});
  el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;if(d.pre)cap=Object.assign({},GR.pre[d.pre]);else if(d.se)season=d.se;else if(d.we)calm=d.we==='1';else return;draw()});
+ $('#rrec',el).onclick=()=>{const r=gridModel(cap,season,calm,cons);nbAdd('g5-grid','Ontario Power Grid',['Day','Weather','Mix (GW): nuclear / hydro / gas / wind / solar','Conservation','Hours met','Renewable share','CO₂ (kt)','Cost points'],[season==='summer'?'Summer':'Winter',calm?'Cloudy and calm':'Sunny and breezy',[cap.nuc,cap.hyd,cap.gas,cap.wind,cap.sol].join(' / '),cons+'%',r.met+'/24',r.renew+'%',r.co2,r.cost])};
  draw();
 }
 
@@ -928,7 +969,7 @@ function sunInfo(day){
 function moonName(f){return f<.02||f>.98?'New moon':f<.23?'Waxing crescent':f<.27?'First quarter':f<.48?'Waxing gibbous':f<.52?'Full moon':f<.73?'Waning gibbous':f<.77?'Third quarter':'Waning crescent'}
 function labSpace(el){
  el.innerHTML='<h3>Lab: 3D Solar System, Seasons and Moon Phases</h3><p class="note">Drag sideways on the picture to turn the view. Use the tilt slider to look from the side or from above.</p>'+
- '<div class="row" id="smode"><button class="btn sm ghost" data-sm="sys">Solar system</button><button class="btn sm ghost" data-sm="sea">Seasons</button><button class="btn sm ghost" data-sm="moon">Moon phases</button><span style="margin-left:auto"></span><button class="btn sm" id="splay">Pause</button></div>'+
+ '<div class="row" id="smode"><button class="btn sm ghost" data-sm="sys">Solar system</button><button class="btn sm ghost" data-sm="sea">Seasons</button><button class="btn sm ghost" data-sm="moon">Moon phases</button><span style="margin-left:auto"></span><button class="btn sm ghost" id="srec" hidden>Record</button><button class="btn sm" id="splay">Pause</button></div>'+
  '<div class="lab wide"><div><canvas id="scv" width="640" height="410" style="background:#0b1026;touch-action:pan-y;cursor:grab" role="img" aria-label="Three-dimensional view of the solar system"></canvas></div><div>'+
  '<label for="stilt"><b>View tilt</b></label><input type="range" id="stilt" min="12" max="90" value="60"><div class="scale"><span>from the side</span><span>from above</span></div>'+
  '<div data-for="sys"><label for="sspd"><b>Speed</b></label><input type="range" id="sspd" min="5" max="200" value="30"><div class="scale"><span>slow</span><span>fast</span></div></div>'+
@@ -984,8 +1025,8 @@ function labSpace(el){
   else{$('#sinfo',el).innerHTML=sel;if($('#sread',el).dataset.v!==read){$('#sread',el).innerHTML=read;$('#sread',el).dataset.v=read}}
   requestAnimationFrame(frame);
  }
- function setMode(m){mode=m;if(m==='sys')sel='Sun';if(m==='moon')yaw=0;el.querySelectorAll('[data-sm]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sm===m));el.querySelectorAll('[data-for]').forEach(d=>d.hidden=d.dataset.for!==m);$('#sread',el).dataset.v=''}
- el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.sm)setMode(b.dataset.sm);else if(b.id==='splay'){play=!play;b.textContent=play?'Pause':'Play'}});
+ function setMode(m){mode=m;if(m==='sys')sel='Sun';if(m==='moon')yaw=0;$('#srec',el).hidden=m==='sys';el.querySelectorAll('[data-sm]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sm===m));el.querySelectorAll('[data-for]').forEach(d=>d.hidden=d.dataset.for!==m);$('#sread',el).dataset.v=''}
+ el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.sm)setMode(b.dataset.sm);else if(b.id==='splay'){play=!play;b.textContent=play?'Pause':'Play'}else if(b.id==='srec'){if(mode==='sea'){const si=sunInfo(Math.max(1,Math.round(day)));nbAdd('g6-seasons','Space Lab: Seasons',['Date','Season in Ontario','Daylight (hours)','Noon Sun height (°)'],[si.date,si.season,si.hours.toFixed(1),Math.round(si.noon)])}else{const f=mp/29.5;nbAdd('g6-moon','Space Lab: Moon Phases',['Days since new moon','Phase','Sunlit part we see (%)'],[mp.toFixed(1),moonName(f),Math.round((1-Math.cos(2*Math.PI*f))/2*100)])}}});
  el.addEventListener('input',e=>{const i=e.target.id,v=+e.target.value;if(i==='stilt')tilt=v;else if(i==='sspd')spd=v/100;else if(i==='sday'){day=v;play=false;$('#splay',el).textContent='Play'}else if(i==='smp'){mp=v;play=false;$('#splay',el).textContent='Play'}});
  cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,m:0};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
  cv.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;drag.m+=Math.abs(dx);drag.x=e.clientX;yaw+=dx*.008});
@@ -993,6 +1034,385 @@ function labSpace(el){
  cv.addEventListener('pointercancel',()=>{drag=null});
  setMode('sys');requestAnimationFrame(frame);
 }
+
+/* ================= ACTIVITY FRAMEWORK, LAB NOTEBOOK ================= */
+/* Labs on the Stage 3 lab bench, and extra activities in other stages. */
+const CHK={};
+function gzHTML(id,title,q,pred,body){
+ return '<div class="gz"><span class="pill">Lab activity</span><h3>'+title+'</h3><p class="gzq"><b>Question:</b> '+q+'</p>'+
+  (pred?'<div class="pred"><label for="p-'+id+'"><b>Predict first:</b> '+pred+'</label><textarea id="p-'+id+'" data-note="pred-'+id+'" placeholder="I predict… because…">'+esc(S.notes['pred-'+id]||'')+'</textarea></div>':'')+
+  body+(CHK[id]?'<div class="gzcheck"><h4>Check your understanding</h4>'+CHK[id].map((q,i)=>'<div class="q"><p>'+(i+1)+'. '+q[0]+'</p><div class="opts">'+q[1].map((a,j)=>'<button data-cq="'+id+'" data-ci="'+i+'" data-a="'+j+'">'+a+'</button>').join('')+'</div><p class="why" aria-live="polite"></p></div>').join('')+'</div>':'')+'</div>';
+}
+function nbAdd(id,title,cols,row){
+ S.nb=S.nb||{};const e=S.nb[id]||(S.nb[id]={rows:[]});e.title=title;e.cols=cols;e.rows.push(row.map(String));if(e.rows.length>40)e.rows.shift();
+ save();nbBadge();toast('Saved to your lab notebook 📓');
+}
+function nbCount(){let n=0;for(const k in S.nb||{})n+=S.nb[k].rows.length;return n}
+function nbBadge(){const b=$('#nbn');if(b)b.textContent=nbCount()?'('+nbCount()+')':''}
+let toastT;
+function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1800)}
+function nbOpen(){
+ const p=$('#nb');p.hidden=false;nbRender();document.body.style.overflow='hidden';$('#nbclose').focus();
+}
+function nbClose(){$('#nb').hidden=true;document.body.style.overflow='';$('#nbbtn').focus()}
+function nbRender(){
+ const nb=S.nb||{},ks=Object.keys(nb).filter(k=>nb[k].rows.length),preds=Object.keys(S.notes).filter(k=>k.indexOf('pred-')===0&&S.notes[k].trim());
+ let h='<div class="nbhead"><div><h2>📓 My Lab Notebook</h2><p class="note">Every time you press a Record button in a lab, the data lands here. Print it or save it as a PDF and hand it in on Google Classroom.</p></div>'+
+  '<div class="row nbtools"><button class="btn" data-nbprint="1">Print or save as PDF</button><button class="btn ghost" id="nbclose">Close</button></div></div>'+
+  '<p><label><b>Name:</b> <input type="text" id="nbname" value="'+esc(S.nbname||'').replace(/"/g,'&quot;')+'" class="tin"></label> <span class="note">Printed on '+new Date().toLocaleDateString('en-CA')+'</span></p>';
+ if(!ks.length&&!preds.length)h+='<div class="alert info">Your notebook is empty. Open a lab and press its Record button to collect data.</div>';
+ if(preds.length)h+='<h3>My predictions</h3><ul>'+preds.map(k=>'<li><b>'+esc(LABNAME[k.slice(5)]||k.slice(5))+':</b> '+esc(S.notes[k])+'</li>').join('')+'</ul>';
+ ks.forEach(k=>{const e=nb[k];h+='<div class="nbsec"><h3>'+esc(e.title)+'</h3><div class="tscroll"><table><tr><th>#</th>'+e.cols.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr>'+
+  e.rows.map((r,i)=>'<tr><td>'+(i+1)+'</td>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</table></div>'+
+  '<div class="row nbtools"><button class="btn sm ghost" data-nbdel="'+k+'">Delete last row</button><button class="btn sm ghost" data-nbclr="'+k+'">Clear this table</button></div></div>'});
+ $('#nbbody').innerHTML=h;
+}
+function nbSetup(){
+ const b=document.createElement('button');b.id='nbbtn';b.className='nbbtn';b.innerHTML='📓 Lab notebook <span id="nbn"></span>';$('.brand').insertBefore(b,$('.track'));
+ const p=document.createElement('section');p.id='nb';p.hidden=true;p.setAttribute('role','dialog');p.setAttribute('aria-modal','true');p.setAttribute('aria-label','My lab notebook');
+ p.innerHTML='<div class="nbin" id="nbbody"></div>';document.body.appendChild(p);
+ p.addEventListener('click',e=>{const t=e.target.closest('button');if(e.target===p)return nbClose();if(!t)return;const d=t.dataset;
+  if(t.id==='nbclose')nbClose();
+  else if(d.nbprint){document.body.dataset.print='nb';print()}
+  else if(d.nbdel){S.nb[d.nbdel].rows.pop();save();nbBadge();nbRender()}
+  else if(d.nbclr){if(confirmClear(t)){S.nb[d.nbclr].rows=[];save();nbBadge();nbRender()}}});
+ p.addEventListener('input',e=>{if(e.target.id==='nbname'){S.nbname=e.target.value;save()}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!p.hidden)nbClose()});
+ b.addEventListener('click',nbOpen);nbBadge();
+}
+/* two-tap confirm instead of a browser dialog */
+function confirmClear(btn){if(btn.dataset.sure){return true}btn.dataset.sure='1';btn.textContent='Tap again to clear';setTimeout(()=>{if(btn.isConnected){delete btn.dataset.sure;btn.textContent='Clear this table'}},3000);return false}
+const LABNAME={};
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function gauss(r){return Math.sqrt(-2*Math.log(r()||1e-9))*Math.cos(2*Math.PI*r())}
+/* ---------- G5 LAB: Breathing Machine ---------- */
+const BRM={c:{healthy:['Healthy lungs',1.2,4,1,18,'#f1a7a7'],asthma:['Asthma attack (airways narrowed)',1.2,.7,1,7,'#f1a7a7'],inhaler:['Asthma attack + reliever inhaler',1.2,2.8,1,14,'#f1a7a7'],smoke:['Smoke-damaged lungs',.75,2,.6,16,'#bfa9a6']},V0:1.2,ref:0,dep:r=>.25+.45*(r-10)/30};
+function breathTidal(cond,rate,depth){const c=BRM.c[cond],f=rate/60,dt=.005;let V=BRM.V0,mn=9,mx=0;for(let t=0;t<12/f+12;t+=dt){const d=depth*(1-Math.cos(2*Math.PI*f*t))/2;V+=(BRM.V0+d*c[1]-V)*(1-Math.exp(-c[2]*dt));if(t>12){mn=Math.min(mn,V);mx=Math.max(mx,V)}}return mx-mn}
+LABNAME.breath='Breathing Machine';
+CHK.breath=[['When the diaphragm contracts and moves down, what happens?',['The chest space gets bigger and air rushes into the lungs','Air is pushed out of the lungs','The heart beats faster'],0,'More space inside the chest means lower pressure, so air flows in.'],
+ ['In the model, why did the lungs move less air during an asthma attack?',['The lungs were smaller','The narrowed airways slowed the air down','The diaphragm stopped moving'],1,'The lungs and diaphragm were the same. Air simply could not flow through the narrow airways fast enough.'],
+ ['Smoke-damaged lungs still moved air, but less oxygen reached the blood. Why?',['The airways were too wide','The damaged air sacs pass less oxygen into the blood','The heart was beating too slowly'],1,'Oxygen crosses into the blood through millions of tiny air sacs. Smoke damages them, so less oxygen gets across.']];
+function labBreath(el){
+ let cond='healthy',auto=true,rate=20,dman=0,V=BRM.V0,ph=0,mn=9,mx=0,tid=0,last=0,flowOff=0,histT=0;
+ if(!BRM.ref)BRM.ref=breathTidal('healthy',20,BRM.dep(20))*20;
+ el.innerHTML=gzHTML('breath','Breathing Machine','How do the diaphragm, airways and air sacs work together, and what happens when one of them is damaged?','Which lungs will move the least air per minute when breathing fast: healthy, asthma or smoke-damaged? Why?',
+ '<div class="row" id="brc">'+Object.keys(BRM.c).map(k=>'<button class="btn sm ghost" data-c="'+k+'">'+BRM.c[k][0]+'</button>').join('')+'</div>'+
+ '<div class="lab"><div><svg id="bsv" viewBox="0 0 360 360" role="img" aria-label="Chest with lungs, airways and diaphragm"></svg></div><div>'+
+ '<div class="row"><button class="btn sm ghost" data-m="auto">Automatic breathing</button><button class="btn sm ghost" data-m="man">I control the diaphragm</button></div>'+
+ '<div id="brA"><label for="brr"><b>Breathing rate:</b> <span id="brrv"></span> breaths per minute</label><input type="range" id="brr" min="10" max="40" step="2" value="20"><div class="scale"><span>slow, resting</span><span>fast, exercising</span></div></div>'+
+ '<div id="brM" hidden><label for="brd"><b>Diaphragm:</b> drag to breathe in and out</label><input type="range" id="brd" min="0" max="100" value="0"><div class="scale"><span>relaxed (breathe out)</span><span>contracted (breathe in)</span></div></div>'+
+ '<div class="read" style="grid-template-columns:1fr 1fr"><div><small>Air in lungs</small><b id="brv"></b> L</div><div><small>Air per breath</small><b id="brt"></b> L</div><div><small>Air per minute</small><b id="brm"></b> L</div><div><small>Oxygen into blood</small><b id="bro"></b>%</div></div>'+
+ '<div id="brinfo" class="alert info" aria-live="polite"></div><button class="btn sm" id="brrec">Record this data</button>'+
+ '<p class="note">Oxygen into blood is compared with healthy lungs at 20 breaths per minute (100%). This is a model with simplified numbers for a 10- to 11-year-old.</p></div></div>');
+ const svg=$('#bsv',el),info={healthy:'Wide, open airways let air rush in and out easily. Healthy air sacs pass plenty of oxygen into the blood.',asthma:'The muscles around the airways have tightened and the lining is swollen, so the airways are narrow. Air cannot get in and out fast enough, especially when breathing fast.',inhaler:'A reliever inhaler relaxes the muscles around the airways so they open up again. Air can flow more easily.',smoke:'Years of smoke have damaged the air sacs and made the lungs stiff. The lungs hold less air, and less oxygen crosses into the blood.'};
+ function setUI(){el.querySelectorAll('#brc button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===cond));el.querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.m==='auto')===auto));$('#brA',el).hidden=!auto;$('#brM',el).hidden=auto;$('#brinfo',el).innerHTML='<b>'+BRM.c[cond][0]+'.</b> '+info[cond];$('#brrv',el).textContent=rate;mn=9;mx=0;tid=0;histT=0}
+ function vals(){const c=BRM.c[cond],perMin=auto?tid*rate:0;return{perMin,o2:auto?Math.round(perMin*c[3]/BRM.ref*100):0}}
+ function frame(ts){
+  if(!svg.isConnected)return;const dt=Math.min(.05,(ts-last)/1000||0);last=ts;const c=BRM.c[cond];
+  let d;if(auto){ph+=dt*rate/60;if(ph>=1){ph-=1;tid=mx-mn;mn=9;mx=0}d=BRM.dep(rate)*(1-Math.cos(2*Math.PI*ph))/2}else{d=dman;histT+=dt;if(histT>6){histT=0;mn=V;mx=V}}
+  const Vold=V;V+=(BRM.V0+d*c[1]-V)*(1-Math.exp(-c[2]*dt));mn=Math.min(mn,V);mx=Math.max(mx,V);if(!auto)tid=mx-mn;
+  const q=(V-Vold)/(dt||1);flowOff+=q*dt*90;
+  const s=.78+.32*(V-BRM.V0)/1.2,top=232+d*36,cy=2*(top-160)+0*1,rib=1+d*.05,aw=c[4],lc=c[5];
+  let h='<rect width="360" height="360" fill="#fff"/><g transform="translate(180 0) scale('+rib+' 1) translate(-180 0)" fill="none" stroke="#d9c7b0" stroke-width="7" stroke-linecap="round">';
+  for(let i=0;i<5;i++)h+='<path d="M180 '+(112+i*30)+'Q'+(66-i*4)+' '+(108+i*30)+' '+(58+i*2)+' '+(150+i*30)+'M180 '+(112+i*30)+'Q'+(294+i*4)+' '+(108+i*30)+' '+(302-i*2)+' '+(150+i*30)+'"/>';
+  h+='</g>';
+  [[124,0],[236,1]].forEach(p=>{h+='<g transform="translate('+p[0]+' '+(186+d*10)+') scale('+s+')"><ellipse rx="52" ry="78" fill="'+lc+'" stroke="#b5615c" stroke-width="2"/>'+(cond==='smoke'?'<circle cx="-14" cy="10" r="6" fill="#6d5d5a" opacity=".55"/><circle cx="12" cy="-18" r="4" fill="#6d5d5a" opacity=".55"/><circle cx="8" cy="30" r="7" fill="#6d5d5a" opacity=".45"/><circle cx="-20" cy="-30" r="4" fill="#6d5d5a" opacity=".5"/>':'')+'</g>'});
+  h+='<path d="M180 14V118M180 118L136 150M180 118L224 150" fill="none" stroke="'+(cond==='asthma'?'#d9534f':'#9aa5a8')+'" stroke-width="'+(aw+6)+'" stroke-linecap="round"/><path d="M180 14V118M180 118L136 150M180 118L224 150" fill="none" stroke="#fff" stroke-width="'+aw+'" stroke-linecap="round"/>';
+  for(let i=0;i<4;i++){const y=14+(((flowOff+i*26)%104)+104)%104;h+='<circle cx="180" cy="'+y+'" r="'+Math.max(2,aw/3.4)+'" fill="#2e86c1" opacity="'+Math.min(1,Math.abs(q)*1.2).toFixed(2)+'"/>'}
+  h+='<path d="M48 330Q180 '+(2*(top-165))+' 312 330" fill="#e8b4a0" stroke="#b5615c" stroke-width="5"/><text x="180" y="352" font-size="12" text-anchor="middle" fill="#586a64">diaphragm</text>';
+  h+='<text x="196" y="40" font-size="12" fill="#586a64">windpipe</text><text x="12" y="20" font-size="13" font-weight="700" fill="#2e86c1">'+(q>0.05?'↓ breathing in':q<-0.05?'↑ breathing out':'')+'</text>';
+  svg.innerHTML=h;
+  const v=vals();$('#brv',el).textContent=V.toFixed(2);$('#brt',el).textContent=tid.toFixed(2);$('#brm',el).textContent=auto?v.perMin.toFixed(1):'—';$('#bro',el).textContent=auto?v.o2:'—';
+  requestAnimationFrame(frame);
+ }
+ el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.c){cond=b.dataset.c;setUI()}else if(b.dataset.m){auto=b.dataset.m==='auto';setUI()}else if(b.id==='brrec'){
+  if(!auto){toast('Switch to automatic breathing to record a full minute of data.');return}if(!tid){toast('Wait for one full breath, then record.');return}
+  const v=vals();nbAdd('g5-breath','Breathing Machine',['Lungs','Breaths per minute','Air per breath (L)','Air per minute (L)','Oxygen into blood (%)'],[BRM.c[cond][0],rate,tid.toFixed(2),v.perMin.toFixed(1),v.o2])}});
+ $('#brr',el).addEventListener('input',e=>{rate=+e.target.value;setUI()});
+ $('#brd',el).addEventListener('input',e=>{dman=+e.target.value/100});
+ setUI();requestAnimationFrame(frame);
+}
+
+/* ---------- G5 LAB: Reaction-Time Lab ---------- */
+LABNAME.react='Reaction-Time Lab';
+CHK.react=[['Which body system carried the message from your eyes or ears to your finger?',['Circulatory','Nervous','Digestive'],1,'Sense organs send signals along nerves to the brain, and the brain sends signals down the spinal cord and nerves to the muscles.'],
+ ['Why might your reaction time be slower while you count backward out loud?',['The brain is busy with another task','Your finger muscles are weaker','Light travels more slowly'],0,'Your brain has to share its attention between two jobs, so the signal to move takes longer.'],
+ ['To make your comparison a fair test, what should stay the same in every round?',['The device and the number of trials','The person being tested should change each round','The signal should change on every trial'],0,'Change only the one thing you are testing, and keep everything else the same.']];
+const RT={rounds:[],cur:null,ac:null};
+function labReact(el){
+ let sig='light',state='idle',t0=0,tmr=0;
+ const CONDS=['My usual hand','My other hand','While counting backward by 3s out loud','Right after 20 jumping jacks (ask your teacher first)','With my eyes on a busy, flashing video'];
+ el.innerHTML=gzHTML('react','Reaction-Time Lab','How fast can your nervous system carry a message, and what slows it down?','Will you react faster to light or to sound? Will your other hand be slower? By about how much?',
+ '<div class="row"><b>Signal:</b><button class="btn sm ghost" data-sig="light">👁 Light</button><button class="btn sm ghost" data-sig="sound">👂 Sound</button>'+
+ '<label style="margin-left:auto"><b>Test condition:</b> <select id="rtc" class="tin">'+CONDS.map(c=>'<option>'+c+'</option>').join('')+'</select></label></div>'+
+ '<div id="rta" class="rta" role="button" tabindex="0" aria-live="assertive"></div>'+
+ '<p class="note">Press Start, then click the box (or press the space bar) as soon as you get the signal. Each round is 5 trials. For the sound test, turn your volume on.</p>'+
+ '<div class="grid2"><div><div id="rtpath" class="alert info"></div><div id="rttab"></div></div><div><svg id="rtbar" viewBox="0 0 320 210" role="img" aria-label="Bar chart of average reaction times"></svg></div></div>');
+ const A=$('#rta',el);
+ function beep(){try{RT.ac=RT.ac||new (window.AudioContext||window.webkitAudioContext)();const o=RT.ac.createOscillator(),g=RT.ac.createGain();o.frequency.value=880;g.gain.value=.25;o.connect(g);g.connect(RT.ac.destination);o.start();o.stop(RT.ac.currentTime+.15)}catch(e){}}
+ function show(cls,txt){A.className='rta '+cls;A.innerHTML=txt}
+ function newRound(){RT.cur={cond:$('#rtc',el).value,sig,t:[]}}
+ function idle(){state='idle';const n=RT.cur?RT.cur.t.length:0;show('',n&&n<5?'<b>Trial '+(n+1)+' of 5</b><br>Press to start the next trial':'<b>Start</b><br>Click here or press the space bar')}
+ function go(){state='go';t0=performance.now();if(sig==='light')show('go','<b>CLICK!</b>');else{beep();show('wait snd','<b>Listen…</b>')}}
+ function press(){
+  if(state==='idle'){if(!RT.cur||RT.cur.t.length>=5||RT.cur.sig!==sig||RT.cur.cond!==$('#rtc',el).value)newRound();if(sig==='sound'){try{RT.ac=RT.ac||new (window.AudioContext||window.webkitAudioContext)();RT.ac.resume()}catch(e){}}
+   state='wait';show(sig==='light'?'wait':'wait snd',sig==='light'?'<b>Wait for green…</b>':'<b>Listen…</b><br>Click when you hear the beep');tmr=setTimeout(go,1500+Math.random()*2500);return}
+  if(state==='wait'){clearTimeout(tmr);state='idle';show('bad','<b>Too soon!</b><br>Wait for the signal. Press to try again.');return}
+  if(state==='go'){const rt=Math.round(performance.now()-t0);state='idle';
+   if(rt<100){show('bad','<b>That was a guess</b> ('+rt+' ms)<br>Press to try again.');return}
+   if(rt>1500){show('bad','<b>Missed it</b><br>Press to try again.');return}
+   RT.cur.t.push(rt);const n=RT.cur.t.length;
+   $('#rtpath',el).innerHTML='<b>'+(rt/1000).toFixed(2)+' seconds.</b> In that time the signal went '+(sig==='light'?'eye → optic nerve':'ear → hearing nerve')+' → brain → spinal cord → nerves in your arm → finger muscles.';
+   if(n>=5){const r=RT.cur,avg=Math.round(r.t.reduce((a,b)=>a+b,0)/5);RT.rounds.push({cond:r.cond,sig:r.sig,avg,best:Math.min.apply(null,r.t)});if(RT.rounds.length>8)RT.rounds.shift();
+    nbAdd('g5-react','Reaction-Time Lab',['Condition','Signal','Trials (ms)','Average (ms)','Fastest (ms)'],[r.cond,r.sig==='light'?'Light':'Sound',r.t.join(', '),avg,Math.min.apply(null,r.t)]);
+    show('done','<b>'+rt+' ms</b><br>Round complete! Average: '+avg+' ms. Press to start a new round.');RT.cur=null;table()}
+   else show('done','<b>'+rt+' ms</b><br>Press for trial '+(n+1)+' of 5');}
+ }
+ function table(){
+  $('#rttab',el).innerHTML=RT.rounds.length?'<table><tr><th>Condition</th><th>Signal</th><th>Average</th><th>Fastest</th></tr>'+RT.rounds.map(r=>'<tr><td>'+r.cond+'</td><td>'+(r.sig==='light'?'Light':'Sound')+'</td><td>'+r.avg+' ms</td><td>'+r.best+' ms</td></tr>').join('')+'</table>':'<p class="note">Your completed rounds will appear here.</p>';
+  const R=RT.rounds,mx=Math.max(500,...R.map(r=>r.avg))*1.18;let h='<text x="0" y="12" font-size="11" font-weight="700" fill="#17312c">Average reaction time (ms)</text>';
+  R.forEach((r,i)=>{const w=r.avg/mx*190,y=22+i*23;h+='<text x="0" y="'+(y+14)+'" font-size="10" fill="#17312c">'+(r.sig==='light'?'👁 ':'👂 ')+r.cond.slice(0,16)+(r.cond.length>16?'…':'')+'</text><rect x="112" y="'+(y+3)+'" width="'+w.toFixed(1)+'" height="15" rx="3" fill="'+(r.sig==='light'?'#2a7a4b':'#2e86c1')+'"/><text x="'+(116+w)+'" y="'+(y+14)+'" font-size="10" fill="#17312c">'+r.avg+'</text>'});
+  $('#rtbar',el).innerHTML=h;
+ }
+ A.addEventListener('pointerdown',e=>{e.preventDefault();press()});
+ A.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();press()}});
+ el.addEventListener('click',e=>{const b=e.target.closest('[data-sig]');if(b){sig=b.dataset.sig;el.querySelectorAll('[data-sig]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.sig===sig));clearTimeout(tmr);RT.cur=null;idle()}});
+ $('#rtc',el).addEventListener('change',()=>{clearTimeout(tmr);RT.cur=null;idle()});
+ el.querySelectorAll('[data-sig]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.sig===sig));
+ $('#rtpath',el).innerHTML='Most people your age react in about 0.2 to 0.4 seconds. Let\'s see what your nervous system can do.';
+ idle();table();
+}
+
+/* ---------- G5 ACTIVITY: Patient Case Files ---------- */
+LABNAME.cases='Patient Case Files';
+const CASES={sys:{circ:['Circulatory',['Heart','Blood','Blood vessels']],resp:['Respiratory',['Windpipe','Airways (bronchi)','Lungs (air sacs)']],dig:['Digestive',['Stomach','Small intestine','Appendix']],nerv:['Nervous',['Brain','Spinal cord','Nerves']],musc:['Musculoskeletal',['Bones','Muscles','Ligaments']]},
+ list:[
+ ['Maya','10','felt a tight chest and could not catch her breath during outdoor gym on a cold morning.',['Wheezing (a whistling sound when breathing)','Coughing','Short of breath','Chest feels tight'],[['Listen to the chest','A whistling sound as she breathes out.'],['Ask about family','Her dad has the same problem.']],'resp','Airways (bronchi)','Asthma',['Pneumonia','Asthma','A cold'],'In asthma, the airways swell, tighten and fill with extra mucus, so less air gets through. Cold air, exercise, smoke and pollen can set it off. A reliever inhaler relaxes the airways. With a plan from their doctor, many people with asthma play any sport they like.'],
+ ['Liam','11','fell off the climbing structure and landed on his arm.',['Wrist is swollen and bruised','It hurts to move it','The arm looks a little bent'],[['X-ray','A crack across one of the forearm bones.'],['Check his fingers','He can feel and wiggle them, so his nerves are working.']],'musc','Bones','Fracture (broken bone)',['Sprain','Muscle cramp','Fracture (broken bone)'],'Bones are living tissue that can repair themselves. A cast holds the pieces still for about four to six weeks while new bone grows. Calcium, vitamin D and regular activity keep bones strong.'],
+ ['Aisha','12','was knocked into the boards during a hockey game.',['Headache','Dizzy','Bright lights bother her','Cannot remember the last period of the game'],[['Ask her questions','She is slow to answer and confused about the score.'],['Check her neck','No neck pain, and she can move her arms and legs normally.']],'nerv','Brain','Concussion',['Concussion','Ear infection','Spinal cord injury'],'A hard hit can make the brain move inside the skull and stop working normally for a while. People with a concussion need rest from sports and screens, then a slow return with a doctor\'s guidance. In Ontario, Rowan\'s Law sets concussion safety rules for school sports. Helmets lower the risk of serious head injury.'],
+ ['Noah','9','gets a stomach ache about an hour after drinking milk or eating ice cream.',['Stomach cramps','Gas and bloating','Only happens after dairy foods'],[['Food diary','The problems happen only after milk, cheese or ice cream.'],['Breath test','His body is not breaking down lactose, the natural sugar in milk.']],'dig','Small intestine','Lactose intolerance',['Appendicitis','Lactose intolerance','Food poisoning'],'The small intestine normally makes an enzyme called lactase that breaks down milk sugar. Without enough of it, the sugar travels to the large intestine, where bacteria feed on it and make gas. Lactose-free milk and other calcium-rich foods help.'],
+ ['Sofia','11','woke up with pain near her belly button that moved to the lower right side of her belly.',['Fever','Does not want to eat','Threw up','Pain gets worse when she moves'],[['Press gently on the lower right belly','Very sore, especially when the pressure is let go.'],['Ultrasound','A small, swollen pouch attached to the large intestine.']],'dig','Appendix','Appendicitis',['Stomach flu','Appendicitis','Lactose intolerance'],'The appendix is a small pouch attached to the large intestine. If it gets blocked, it can become infected and swollen. Appendicitis is an emergency: surgeons usually remove the appendix, and people live normally without it.'],
+ ['Ethan','12','feels tired all the time and gets out of breath climbing the stairs at school.',['Pale skin','Cold hands','Heart beats fast','Tired even after sleeping'],[['Blood test','Fewer red blood cells than normal, and low iron.'],['Check his pulse','Faster than usual, even at rest.']],'circ','Blood','Anemia',['High blood pressure','Dehydration','Anemia'],'Red blood cells carry oxygen using hemoglobin, which needs iron. With too few red blood cells, muscles get less oxygen, so the person feels tired and the heart works harder. Iron-rich foods such as beans, lentils, meat and leafy greens, or iron prescribed by a doctor, can help.'],
+ ['Olivia','10','landed on the side of her foot after jumping for a basketball rebound.',['Ankle is swollen and bruised','Hurts to walk on it','Nothing looks out of place'],[['X-ray','The bones are not broken.'],['Gentle movement test','The tough bands that hold the ankle bones together are stretched and slightly torn.']],'musc','Ligaments','Sprain',['Sprain','Fracture (broken bone)','Concussion'],'Ligaments are tough bands that connect bone to bone at a joint. Overstretching them causes a sprain. Rest, ice, gentle compression and raising the ankle help it heal, and exercises can strengthen it afterwards.'],
+ ['Lucas','8','has had a cough and fever for four days, and it hurts to take a deep breath.',['Fever','Cough with mucus','Breathing fast','Very tired'],[['Listen to the chest','Crackling sounds at the bottom of the right lung.'],['Chest X-ray','A cloudy patch where fluid has filled some of the air sacs.']],'resp','Lungs (air sacs)','Pneumonia',['Asthma','Pneumonia','A broken rib'],'Pneumonia is an infection that fills some air sacs with fluid, so less oxygen gets into the blood. Doctors may prescribe medicine depending on the cause, and vaccines protect against some types.']]};
+function labCases(el){
+ S.cases=S.cases||{};let ci=0,step=0,tries=0,shown={};
+ const AV=['👧','👦','👧','👦','👧','👦','👧','👦'];
+ el.innerHTML=gzHTML('cases','Patient Case Files','Can you use the symptoms and test results to work out which body system, which organ and which condition each patient has?','',
+  '<div class="row" id="cslist"></div><div id="csbody"></div><p class="note">These are made-up patients. Only a doctor can diagnose a real illness. If you feel unwell, tell a trusted adult.</p>');
+ function list(){$('#cslist',el).innerHTML='<b>Cases solved: '+Object.keys(S.cases).length+' of 8</b> '+CASES.list.map((c,i)=>'<button class="btn sm ghost" data-ci="'+i+'" aria-pressed="'+(i===ci)+'">'+(i+1)+(S.cases[i]?' ✓':'')+'</button>').join('')}
+ function draw(msg){
+  const c=CASES.list[ci],sys=CASES.sys[c[5]],solved=S.cases[ci];
+  let h='<div class="case"><div class="cshead"><span class="av" aria-hidden="true">'+AV[ci]+'</span><div><h4>Case '+(ci+1)+': '+c[0]+', age '+c[1]+'</h4><p>'+c[0]+' '+c[2]+'</p></div></div>'+
+   '<div class="grid2"><div><b>Symptoms</b><ul>'+c[3].map(s=>'<li>'+s+'</li>').join('')+'</ul></div><div><b>Run a test</b><div class="row">'+c[4].map((t,j)=>'<button class="btn sm ghost" data-test="'+j+'">'+t[0]+'</button>').join('')+'</div>'+
+   c[4].map((t,j)=>shown[j]||solved?'<p class="clue">🔬 <b>'+t[0]+':</b> '+t[1]+'</p>':'').join('')+'</div></div>';
+  if(solved){h+='<div class="alert good">Solved! <b>'+sys[0]+' system → '+c[6]+' → '+c[7]+'</b></div><p>'+c[9]+'</p>'+(ci<7?'<button class="btn sm" data-next="1">Next case ▶</button>':'')}
+  else{const opts=step===0?Object.keys(CASES.sys).map(k=>[k,CASES.sys[k][0]+' system']):step===1?sys[1].map(o=>[o,o]):c[8].map(o=>[o,o]);
+   h+='<p class="step"><b>Step '+(step+1)+' of 3: '+['Which body system is affected?','Which organ or body part is the problem?','What is the condition?'][step]+'</b></p><div class="row">'+opts.map(o=>'<button class="btn sm" data-pick="'+o[0]+'">'+o[1]+'</button>').join('')+'</div>'+
+    (step>0?'<p class="note">So far: '+sys[0]+' system'+(step>1?' → '+c[6]:'')+'</p>':'')}
+  if(msg)h+='<div class="alert bad" aria-live="polite">'+msg+'</div>';
+  $('#csbody',el).innerHTML=h+'</div>';list();
+ }
+ el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset,c=CASES.list[ci];
+  if(d.ci!==undefined&&b.closest('#cslist')){ci=+d.ci;step=0;tries=0;shown={};draw()}
+  else if(d.next){ci=Math.min(7,ci+1);step=0;tries=0;shown={};draw()}
+  else if(d.test!==undefined){shown[d.test]=1;draw()}
+  else if(d.pick){tries++;const ans=[c[5],c[6],c[7]][step];
+   if(d.pick===ans){step++;if(step>2){S.cases[ci]=tries;save();nbAdd('g5-cases','Patient Case Files',['Case','Patient','System','Organ','Condition','Picks (3 = no mistakes)'],[ci+1,c[0],CASES.sys[c[5]][0],c[6],c[7],tries])}draw()}
+   else draw(['Not that system. Re-read the symptoms, or run a test for another clue.','Not that part. Which test result points to a specific organ?','Not that condition. Read the explanation of each clue again.'][step])}});
+ draw();
+}
+/* ---------- G6 ACTIVITY: Ontario Species Key ---------- */
+LABNAME.key='Ontario Species Key';
+const OKEY={n:{n1:['Is it green, and does it make its own food using sunlight?','n2','n4'],n2:['Does it have a woody trunk?','n3','trillium'],n3:['Does it have needles instead of wide, flat leaves?','pine','maple'],
+  n4:['Does it get its food by breaking down dead wood or leaves (it has no mouth)?','fungus','n5'],n5:['Does it have a backbone?','n6','n10'],n6:['Does it have feathers?','n7','n8'],n7:['Does it have webbed feet and dive underwater for fish?','loon','chickadee'],
+  n8:['Does it have fur?','n9','n11'],n9:['Can it fly?','bat','beaver'],n11:['Does it have smooth, moist skin and lay its eggs in water?','peeper','snake'],n10:['Does it have six legs?','monarch','worm']},
+ leaf:{trillium:['White trillium','Plant','🌸'],pine:['Eastern white pine','Plant','🌲'],maple:['Sugar maple','Plant','🍁'],fungus:['Turkey tail fungus','Fungus','🍄'],loon:['Common loon','Bird','🦆'],chickadee:['Black-capped chickadee','Bird','🐦'],bat:['Little brown bat','Mammal','🦇'],beaver:['North American beaver','Mammal','🦫'],peeper:['Spring peeper','Amphibian','🐸'],snake:['Eastern garter snake','Reptile','🐍'],monarch:['Monarch butterfly','Insect','🦋'],worm:['Earthworm','Annelid (segmented worm)','🪱']},
+ mys:[['peeper','A tiny animal about 3 cm long, with a backbone. Its skin is smooth and damp. In early spring it calls with a loud "peep" from ponds, where it lays its eggs.'],
+  ['maple','A tall organism with a woody trunk and wide, flat leaves with five points. Its leaves turn red and orange in fall, and people collect its sap in spring.'],
+  ['worm','A soft, long body made of rings. No backbone and no legs. It tunnels through soil and eats dead leaves.'],
+  ['chickadee','Small, with a backbone and covered in feathers, with a black cap and bib. It visits feeders in winter and eats seeds and insects. Its feet are not webbed.'],
+  ['fungus','Grows in fan-shaped layers on a dead log. It is not green and has no mouth. It gets its food by breaking down the dead wood.'],
+  ['beaver','A large animal with a backbone and thick brown fur. It cannot fly. It cuts down trees with its teeth to build dams.'],
+  ['trillium','Green, and makes its own food from sunlight. It has no woody trunk. It blooms on the forest floor in spring with three white petals.'],
+  ['monarch','No backbone. Six legs and four orange and black wings. It travels thousands of kilometres to Mexico every fall.'],
+  ['loon','Has a backbone and feathers. It has webbed feet and dives deep underwater to catch fish. Its call echoes across northern lakes.'],
+  ['pine','Green and makes its own food from sunlight. A tall, woody trunk with long, soft needles in bundles of five instead of flat leaves.'],
+  ['bat','Has a backbone and fur. It flies at night catching insects and sleeps hanging upside down.'],
+  ['snake','Has a backbone. Its skin is covered in dry scales with yellow stripes. No legs, no fur and no feathers.']],
+ mine:[['Dandelion','🌼'],['American robin','🐦'],['Ant','🐜'],['Grey squirrel','🐿️'],['Red oak tree','🌳'],['Earthworm','🪱'],['Bumblebee','🐝'],['Lawn grass','🌱'],['Garden spider','🕷️'],['Common crow','🐦‍⬛']]};
+CHK.key=[['How does a dichotomous key work?',['It lists organisms in alphabetical order','It asks a series of two-choice questions about features you can observe','It shows a photo of every species'],1,'Each question splits the group in two, until only one organism is left.'],
+ ['The beaver and the little brown bat ended up in the same group. Which feature do they share?',['They both fly','They both live in water','They both have fur, so they are mammals'],2,'Fur is a feature only mammals have, so the key groups them together before splitting them apart.'],
+ ['Why is "Is it pretty?" a poor question for a key?',['Different people would answer it differently','It is too short','It only works for plants'],0,'Good key questions are about features everyone can observe and agree on.']];
+function labKey(el){
+ S.keyans=S.keyans||{};S.mykey=S.mykey||{q:['','',''],leaf:['','','',''],pick:[]};let cur=null,node='n1',path=[],checked=false,mode='use',walk=null;
+ el.innerHTML=gzHTML('key','Ontario Species Key','How can scientists identify a living thing by asking yes-or-no questions about its features?','',
+  '<div class="row"><button class="btn sm ghost" data-km="use">Part 1: Use the key</button><button class="btn sm ghost" data-km="build">Part 2: Build your own key</button></div><div id="kbody"></div>');
+ const L=OKEY.leaf;
+ function useHTML(){
+  let h='<p>Read each mystery organism, then press <b>Identify</b> and answer the key\'s questions. Do not guess the name: let the key tell you.</p><div class="mys">'+OKEY.mys.map((m,i)=>{const a=S.keyans[i],ok=a===m[0];
+   return '<div class="mcard'+(checked&&a?(ok?' ok':' no'):'')+'"><b>Mystery '+String.fromCharCode(65+i)+'</b><p>'+m[1]+'</p>'+(a?'<p class="ans">Key says: '+L[a][2]+' <b>'+L[a][0]+'</b>'+(checked?(ok?' ✓':' ✗ try again'):'')+'</p>':'')+'<button class="btn sm" data-mys="'+i+'">'+(a?'Identify again':'Identify')+'</button></div>'}).join('')+'</div>';
+  const done=Object.keys(S.keyans).length;
+  h+='<div class="row"><button class="btn" data-kcheck="1"'+(done<12?' disabled':'')+'>Check my identifications ('+done+' of 12 done)</button><button class="btn sm ghost" data-kview="1">Show the whole key</button></div><div id="kmsg"></div><div id="kfull" hidden>'+fullKey()+'</div>';
+  return h;
+ }
+ function fullKey(){let n=0;const num={};Object.keys(OKEY.n).forEach(k=>num[k]=++n);const lab=t=>OKEY.n[t]?'go to '+num[t]:L[t][0]+' ('+L[t][1]+')';
+  return '<ol class="fullkey">'+Object.keys(OKEY.n).map(k=>{const q=OKEY.n[k];return '<li>'+q[0]+'<br><span>Yes → '+lab(q[1])+'</span><br><span>No → '+lab(q[2])+'</span></li>'}).join('')+'</ol>'}
+ function walkHTML(){const m=OKEY.mys[cur];
+  if(!OKEY.n[node]){const lf=L[node];return '<div class="walk"><p><b>Mystery '+String.fromCharCode(65+cur)+'</b>: '+m[1]+'</p><div class="alert good">The key says this is '+lf[2]+' <b>'+lf[0]+'</b> ('+lf[1]+').</div><p class="note">Your path: '+path.join(' → ')+'</p><div class="row"><button class="btn" data-kok="1">Save and go back</button><button class="btn ghost" data-kre="1">Start this one again</button></div></div>'}
+  return '<div class="walk"><p><b>Mystery '+String.fromCharCode(65+cur)+'</b>: '+m[1]+'</p><p class="kq">'+OKEY.n[node][0]+'</p><div class="row"><button class="btn" data-ky="1">Yes</button><button class="btn" data-ky="0">No</button><button class="btn ghost sm" data-kre="1">Start again</button><button class="btn ghost sm" data-kback="1">Back to the list</button></div><p class="note">Your path: '+(path.join(' → ')||'start')+'</p></div>'}
+ function buildHTML(){const K=S.mykey,opts='<option value="">choose…</option>'+OKEY.mine.map(o=>'<option>'+o[0]+'</option>').join('');
+  const sel=(i)=>'<select class="tin" data-kl="'+i+'">'+opts.replace('<option>'+K.leaf[i]+'</option>','<option selected>'+K.leaf[i]+'</option>')+'</select>';
+  return '<p>Choose four schoolyard organisms and write three yes-or-no questions that sort them. Question 1 splits them into two pairs; questions 2 and 3 split each pair.</p>'+
+   '<p class="note">Organisms to choose from: '+OKEY.mine.map(o=>o[1]+' '+o[0]).join(', ')+'</p>'+
+   '<div class="kb"><label><b>Question 1</b><input class="tin" data-kq="0" value="'+esc(K.q[0]).replace(/"/g,'&quot;')+'" placeholder="e.g. Does it have legs?"></label>'+
+   '<div class="grid2"><div class="kbr"><b>If YES → Question 2</b><input class="tin" data-kq="1" value="'+esc(K.q[1]).replace(/"/g,'&quot;')+'"><label>Yes: '+sel(0)+'</label><label>No: '+sel(1)+'</label></div>'+
+   '<div class="kbr"><b>If NO → Question 3</b><input class="tin" data-kq="2" value="'+esc(K.q[2]).replace(/"/g,'&quot;')+'"><label>Yes: '+sel(2)+'</label><label>No: '+sel(3)+'</label></div></div></div>'+
+   '<div class="row"><button class="btn" data-ktry="1">Test my key</button><button class="btn ghost" data-ksave="1">Save my key to the notebook</button></div><div id="ktry"></div>'}
+ function draw(){el.querySelectorAll('[data-km]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.km===mode));$('#kbody',el).innerHTML=mode==='build'?buildHTML():cur!==null?walkHTML():useHTML()}
+ function valid(){const K=S.mykey;if(K.q.some(q=>!q.trim()))return 'Write all three questions first.';if(K.leaf.some(l=>!l))return 'Choose an organism for all four places.';if(new Set(K.leaf).size<4)return 'Use four different organisms.';return ''}
+ el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.km){mode=d.km;cur=null;draw()}
+  else if(d.mys!==undefined){cur=+d.mys;node='n1';path=[];draw()}
+  else if(d.ky!==undefined){path.push(d.ky==='1'?'Yes':'No');node=OKEY.n[node][d.ky==='1'?1:2];draw()}
+  else if(d.kre){node='n1';path=[];draw()}
+  else if(d.kback){cur=null;draw()}
+  else if(d.kok){S.keyans[cur]=node;checked=false;save();const lf=L[node];nbAdd('g6-key','Ontario Species Key',['Mystery','Key says','Group','Path'],[String.fromCharCode(65+cur),lf[0],lf[1],path.join(' → ')]);cur=null;draw()}
+  else if(d.kcheck){checked=true;draw();const right=OKEY.mys.filter((m,i)=>S.keyans[i]===m[0]).length;$('#kmsg',el).innerHTML='<div class="alert '+(right===12?'good':'bad')+'">'+right+' of 12 correct.'+(right===12?' Excellent: you used the key like a field biologist.':' Identify the ✗ ones again and answer each question carefully.')+'</div>'}
+  else if(d.kview){const f=$('#kfull',el);f.hidden=!f.hidden;b.textContent=f.hidden?'Show the whole key':'Hide the whole key'}
+  else if(d.ktry||d.kwy!==undefined){const v=valid();if(v){$('#ktry',el).innerHTML='<div class="alert bad">'+v+'</div>';return}
+   const K=S.mykey;if(d.ktry)walk=[];else walk.push(+d.kwy);
+   let h;if(walk.length===0)h='<p class="kq">'+esc(K.q[0])+'</p>';else if(walk.length===1)h='<p class="kq">'+esc(K.q[walk[0]?1:2])+'</p>';
+   else{const leaf=K.leaf[(walk[0]?0:2)+(walk[1]?0:1)];h='<div class="alert good">Your key says: <b>'+esc(leaf)+'</b>. Did it lead where you expected? Try it with a partner who does not know which organism you are thinking of.</div><button class="btn sm" data-ktry="1">Test again</button>'}
+   if(walk.length<2)h+='<div class="row"><button class="btn" data-kwy="1">Yes</button><button class="btn" data-kwy="0">No</button></div>';
+   $('#ktry',el).innerHTML='<div class="walk">'+h+'</div>'}
+  else if(d.ksave){const v=valid();if(v){$('#ktry',el).innerHTML='<div class="alert bad">'+v+'</div>';return}const K=S.mykey;
+   nbAdd('g6-mykey','My Own Dichotomous Key',['Question 1','If yes: Question 2','If no: Question 3','Yes, yes','Yes, no','No, yes','No, no'],[K.q[0],K.q[1],K.q[2]].concat(K.leaf))}});
+ el.addEventListener('input',e=>{const d=e.target.dataset;if(d.kq!==undefined){S.mykey.q[+d.kq]=e.target.value;save()}});
+ el.addEventListener('change',e=>{const d=e.target.dataset;if(d.kl!==undefined){S.mykey.leaf[+d.kl]=e.target.value;save()}});
+ draw();
+}
+
+/* ---------- G6 LAB: Quadrat Sampler ---------- */
+LABNAME.quad='Quadrat Sampler';
+const QH={lawn:['Mowed school lawn','#a6cf86',[['Lawn grass','🌱',12,'#4f9a3a'],['Dandelion','🌼',1.6,'#e8c21a'],['White clover','☘️',1.4,'#2f7d4a'],['Ant','🐜',.8,'#5b3a29']]],
+ meadow:['Old-field meadow','#cbd593',[['Wild grasses','🌾',5,'#b39b4c'],['Black-eyed Susan','🌻',1.6,'#e0a21a'],['Common milkweed','🌿',1.4,'#3f8f54'],['Wild bergamot','🌸',1.3,'#c56cb8'],['White clover','☘️',1,'#2f7d4a'],['Bumblebee','🐝',.9,'#2b2b2b'],['Grasshopper','🦗',.8,'#6f9a28'],['Lady beetle','🐞',.6,'#c0392b'],['Monarch caterpillar','🐛',.4,'#d68a1a'],['Dandelion','🌼',.5,'#e8c21a']]],
+ forest:['Forest edge','#9cb986',[['Sugar maple seedling','🍁',2.2,'#c0392b'],['Fern','🌿',2.4,'#2f7d4a'],['Moss clump','🟢',1.6,'#6aa84f'],['White trillium','🌸',1,'#e3c6de'],['Mushroom','🍄',1,'#a0522d'],['Snail','🐌',.7,'#8d6e63'],['Spider','🕷️',.6,'#333'],['Ant','🐜',.9,'#5b3a29'],['Woodland grass','🌱',1,'#4f9a3a']]]};
+const QD={fields:{},samples:{lawn:[],meadow:[],forest:[]}};
+function quadField(h){if(QD.fields[h])return QD.fields[h];const r=rng({lawn:11,meadow:22,forest:33}[h]),pts=[];
+ QH[h][2].forEach((s,si)=>{const n=Math.round(s[2]*56.25),cs=[0,1,2].map(()=>[r()*640,r()*360]);for(let i=0;i<n;i++){let x,y;if(r()<.6){const c=cs[i%3];x=c[0]+gauss(r)*70;y=c[1]+gauss(r)*70}else{x=r()*640;y=r()*360}pts.push([((x%640)+640)%640,((y%360)+360)%360,si])}});
+ return QD.fields[h]=pts}
+function quadStats(list,nsp){const tot=new Array(nsp).fill(0);list.forEach(c=>c.forEach((v,i)=>tot[i]+=v));const N=tot.reduce((a,b)=>a+b,0),rich=tot.filter(v=>v>0).length;
+ const simp=N>1?1-tot.reduce((a,n)=>a+n*(n-1),0)/(N*(N-1)):0;return{tot,N,rich,simp:Math.round(simp*100)}}
+CHK.quad=[['Why should scientists sample more than one quadrat in each habitat?',['One square might not represent the whole area','Quadrats wear out quickly','It is a rule for every experiment'],0,'Living things are patchy. More samples give a fairer picture of the whole habitat.'],
+ ['Which habitat usually has the higher biodiversity, and why?',['The mowed lawn, because it has the most plants','The meadow or forest edge, because more kinds of plants give food and shelter to more kinds of animals','They are all the same'],1,'A variety of producers supports a variety of consumers.'],
+ ['The lawn had lots of organisms but only a few species. What does that tell you?',['A large number of organisms does not mean high biodiversity','The lawn has the highest biodiversity','Grass is not a living thing'],0,'Biodiversity is about how many different kinds there are and how evenly they are spread, not just how many individuals.']];
+function labQuad(el){
+ let hab='lawn',q=null,counted=[];const QS=64,Z=5;
+ el.innerHTML=gzHTML('quad','Quadrat Sampler','How do ecologists measure biodiversity, and how does it differ between a lawn, a meadow and a forest edge?','Which habitat will have the most different species? Which will have the most organisms in total? Will those be the same habitat?',
+ '<div class="row" id="qh">'+Object.keys(QH).map(k=>'<button class="btn sm ghost" data-h="'+k+'">'+QH[k][0]+'</button>').join('')+'</div>'+
+ '<div class="lab wide"><div><canvas id="qf" width="640" height="360" role="img" aria-label="Map of the habitat. Click to drop a 1 metre square quadrat." style="cursor:crosshair"></canvas><p class="note">Each dot is one organism. Click anywhere on the map to drop a 1 m × 1 m quadrat.</p></div>'+
+ '<div><canvas id="qz" width="320" height="320" role="img" aria-label="Close-up of the quadrat. Click each organism to count it."></canvas><div class="row"><button class="btn sm ghost" id="qall">Count the rest for me</button><button class="btn sm" id="qrec" disabled>Record this quadrat</button></div><div id="qtally"></div></div></div>'+
+ '<h4 style="margin:12px 0 6px">Results by habitat</h4><div id="qres" class="tscroll"></div><div class="row"><button class="btn sm ghost" id="qsum">Record habitat summaries in my notebook</button></div>'+
+ '<p class="note"><b>Different-species chance</b>: if you picked two of the organisms you counted at random, the chance they would be different species. Higher means more biodiversity. These habitats are models based on typical southern Ontario sites.</p>');
+ const F=$('#qf',el),fg=F.getContext('2d'),Zc=$('#qz',el),zg=Zc.getContext('2d');
+ function inQ(){if(!q)return[];return quadField(hab).map((p,i)=>[p,i]).filter(a=>a[0][0]>=q[0]&&a[0][0]<q[0]+QS&&a[0][1]>=q[1]&&a[0][1]<q[1]+QS)}
+ function drawField(){const H=QH[hab],pts=quadField(hab);fg.fillStyle=H[1];fg.fillRect(0,0,640,360);pts.forEach(p=>{fg.fillStyle=H[2][p[2]][3];fg.fillRect(p[0]-1.5,p[1]-1.5,3,3)});
+  fg.lineWidth=2;QD.samples[hab].forEach((s,i)=>{fg.strokeStyle='#17312c';fg.strokeRect(s.q[0],s.q[1],QS,QS);fg.fillStyle='#17312c';fg.font='bold 12px system-ui';fg.fillText(i+1,s.q[0]+3,s.q[1]+13)});
+  if(q){fg.strokeStyle='#f2b705';fg.lineWidth=3;fg.strokeRect(q[0],q[1],QS,QS)}}
+ function drawZoom(){const H=QH[hab];zg.fillStyle=H[1];zg.fillRect(0,0,320,320);zg.strokeStyle='#f2b705';zg.lineWidth=6;zg.strokeRect(3,3,314,314);
+  if(!q){zg.fillStyle='#17312c';zg.font='15px system-ui';zg.textAlign='center';zg.fillText('Click the map to drop a quadrat',160,160);zg.textAlign='left';return}
+  zg.font='22px system-ui';zg.textAlign='center';zg.textBaseline='middle';inQ().forEach(a=>{const p=a[0],x=(p[0]-q[0])*Z,y=(p[1]-q[1])*Z;zg.globalAlpha=counted.includes(a[1])?.35:1;zg.fillText(H[2][p[2]][1],x,y);if(counted.includes(a[1])){zg.globalAlpha=1;zg.fillStyle='#1d7a46';zg.font='bold 14px system-ui';zg.fillText('✓',x+10,y-10);zg.font='22px system-ui';zg.fillStyle='#17312c'}});zg.globalAlpha=1;zg.textAlign='left';zg.textBaseline='alphabetic'}
+ function tally(){const H=QH[hab],c=new Array(H[2].length).fill(0),all=inQ();all.forEach(a=>{if(counted.includes(a[1]))c[a[0][2]]++});
+  $('#qtally',el).innerHTML=q?'<p class="note">Counted '+counted.length+' of '+all.length+' organisms in this quadrat.</p><table><tr><th>Species</th><th>Count</th></tr>'+H[2].map((s,i)=>c[i]?'<tr><td>'+s[1]+' '+s[0]+'</td><td>'+c[i]+'</td></tr>':'').join('')+'</table>':'';
+  $('#qrec',el).disabled=!q||counted.length<all.length;return c}
+ function results(){let h='<table><tr><th>Habitat</th><th>Quadrats</th><th>Species found</th><th>Organisms counted</th><th>Average per quadrat</th><th>Different-species chance</th></tr>';
+  Object.keys(QH).forEach(k=>{const L=QD.samples[k],st=quadStats(L.map(s=>s.c),QH[k][2].length);h+='<tr><td>'+QH[k][0]+'</td><td>'+L.length+'</td><td>'+(L.length?st.rich:'—')+'</td><td>'+(L.length?st.N:'—')+'</td><td>'+(L.length?(st.N/L.length).toFixed(1):'—')+'</td><td>'+(L.length?st.simp+'%':'—')+'</td></tr>'});
+  $('#qres',el).innerHTML=h+'</table>'}
+ function all(){el.querySelectorAll('#qh button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.h===hab));drawField();drawZoom();tally();results()}
+ F.addEventListener('click',e=>{const r=F.getBoundingClientRect(),x=(e.clientX-r.left)*640/r.width,y=(e.clientY-r.top)*360/r.height;
+  if(QD.samples[hab].length>=8){toast('8 quadrats is enough for one habitat. Try another habitat.');return}q=[clamp(Math.round(x-QS/2),0,640-QS),clamp(Math.round(y-QS/2),0,360-QS)];counted=[];all()});
+ Zc.addEventListener('click',e=>{if(!q)return;const r=Zc.getBoundingClientRect(),x=(e.clientX-r.left)*320/r.width,y=(e.clientY-r.top)*320/r.height;let best=null,bd=20;
+  inQ().forEach(a=>{if(counted.includes(a[1]))return;const d=Math.hypot((a[0][0]-q[0])*Z-x,(a[0][1]-q[1])*Z-y);if(d<bd){bd=d;best=a[1]}});if(best!==null){counted.push(best);drawZoom();tally()}});
+ $('#qall',el).onclick=()=>{if(!q)return;inQ().forEach(a=>{if(!counted.includes(a[1]))counted.push(a[1])});drawZoom();tally()};
+ $('#qrec',el).onclick=()=>{const c=tally(),H=QH[hab];QD.samples[hab].push({q,c});const n=QD.samples[hab].length;
+  nbAdd('g6-quad','Quadrat Sampler',['Habitat','Quadrat','Species in quadrat','Organisms','Counts'],[H[0],n,c.filter(v=>v).length,c.reduce((a,b)=>a+b,0),H[2].map((s,i)=>c[i]?s[0]+' '+c[i]:'').filter(Boolean).join('; ')]);q=null;counted=[];all()};
+ $('#qsum',el).onclick=()=>{let n=0;Object.keys(QH).forEach(k=>{const L=QD.samples[k];if(!L.length)return;const st=quadStats(L.map(s=>s.c),QH[k][2].length);n++;
+  nbAdd('g6-quadsum','Quadrat Sampler: habitat summary',['Habitat','Quadrats','Species found','Organisms counted','Different-species chance'],[QH[k][0],L.length,st.rich,st.N,st.simp+'%'])});if(!n)toast('Record at least one quadrat first.')};
+ $('#qh',el).addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(b){hab=b.dataset.h;q=null;counted=[];all()}});
+ all();
+}
+
+/* ---------- G6 LAB: Snowshoe Hare Survival ---------- */
+LABNAME.hare='Snowshoe Hare Survival';
+const HS={clim:{cold:['Cold winters (Ontario, 1970s)',75,238],today:['Today',88,222],warm:['Much warmer winters',106,204],grad:['Gradual warming',75,238]},vary:{low:['Low',3],med:['Medium',8],high:['High',16]},MAX:60};
+function hareSnow(st){if(st.clim!=='grad')return HS.clim[st.clim].slice(1);const k=Math.min(1,st.year/25);return[Math.round(75+31*k),Math.round(238-34*k)]}
+function hareNew(clim,vary,seed){const r=rng(seed||7),sd=HS.vary[vary][1],h=[];for(let i=0;i<HS.MAX;i++)h.push({w:70+gauss(r)*sd,b:242+gauss(r)*sd});return{clim,vary,year:0,h,r,hist:[{pop:HS.MAX,mis:0}],dead:[]}}
+function hareMis(x,s){return Math.abs(x.w-s[0])+Math.abs(x.b-s[1])}
+function hareYear(st){const s=hareSnow(st),r=st.r,sd=HS.vary[st.vary][1]*.6;let tm=0;st.dead=[];
+ const surv=st.h.filter(x=>{const m=hareMis(x,s);tm+=m;const ok=r()<.8*Math.exp(-.02*m);if(!ok)st.dead.push(x);return ok});
+ const kids=[];surv.forEach(p=>{for(let i=0;i<2;i++)kids.push({w:p.w+gauss(r)*sd,b:p.b+gauss(r)*sd})});
+ let next=surv.concat(kids);while(next.length>HS.MAX)next.splice(Math.floor(r()*next.length),1);
+ st.h=surv.length?next:[];st.year++;st.hist.push({pop:st.h.length,mis:st.h.length?Math.round(st.h.reduce((a,x)=>a+hareMis(x,hareSnow(st)),0)/st.h.length):0,surv:surv.length,before:surv.length+st.dead.length,avgMis:Math.round(tm/(surv.length+st.dead.length||1))});return st}
+function hareDate(d){const M=['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],L=[30,31,30,31,31,28,31,30,31,30,31,31];d=Math.round(d);let m=0;while(m<11&&d>=L[m]){d-=L[m];m++}return M[m]+' '+(d+1)}
+CHK.hare=[['Why did some hares survive better than others?',['They were bigger','Their coat colour matched the ground more of the time, so predators saw them less','They ate more food'],1,'A white hare on brown ground, or a brown hare on snow, is easy for a lynx or owl to spot.'],
+ ['Why did a population with more variation cope better with warming?',['Some hares already had coat timing that suited the new snow season, and passed it on','Variation made the snow last longer','Variation made predators leave'],0,'Variation within a species gives natural selection something to work with when conditions change.'],
+ ['How does climate change threaten snowshoe hares?',['More snow makes them turn brown','Shorter snow seasons leave white hares on brown ground','Hares stop eating in warm weather'],1,'Hares change colour mainly by day length, which does not change, so they can end up mismatched with the snow.']];
+function labHare(el){
+ let st=hareNew('cold','med',7),anim=null,day=0,last=0,seed=7;
+ el.innerHTML=gzHTML('hare','Snowshoe Hare Survival','Why does variation within a species matter, and how could shorter snow seasons affect snowshoe hares?','What will happen to the hares if the snow season gets shorter? Will a population with more variation do better or worse?',
+ '<div class="row"><b>Climate:</b><span id="hcl">'+Object.keys(HS.clim).map(k=>'<button class="btn sm ghost" data-hc="'+k+'">'+HS.clim[k][0]+'</button>').join(' ')+'</span></div>'+
+ '<div class="row"><b>Variation in coat timing:</b><span id="hvr">'+Object.keys(HS.vary).map(k=>'<button class="btn sm ghost" data-hv="'+k+'">'+HS.vary[k][0]+'</button>').join(' ')+'</span><span class="note">(changing these restarts the population)</span></div>'+
+ '<canvas id="hcv" width="640" height="230" role="img" aria-label="Field with snowshoe hares through the seasons"></canvas>'+
+ '<div class="row"><button class="btn sm" id="h1">Watch one year ▶</button><button class="btn sm" id="h10">Run 10 years ▶▶</button><button class="btn sm ghost" id="hrec">Record this year</button><button class="btn sm ghost" id="hrs">Reset</button></div>'+
+ '<div class="read" style="grid-template-columns:repeat(4,1fr)"><div><small>Year</small><b id="hy"></b></div><div><small>Hares</small><b id="hp"></b></div><div><small>Days mismatched</small><b id="hm"></b></div><div><small>Snow season</small><b id="hsn" style="font-size:.95rem"></b></div></div>'+
+ '<div id="hmsg" class="alert info" aria-live="polite"></div><div class="grid2"><svg id="hcal" viewBox="0 0 320 120" role="img" aria-label="Snow season compared with when the hares are white"></svg><svg id="hgr" viewBox="0 0 320 120" role="img" aria-label="Population over the years"></svg></div>'+
+ '<p class="note">Snowshoe hares live across northern and central Ontario. They turn white in fall and brown in spring, mostly in response to day length, not snow. A model: each hare inherits its timing from its parent, with small random differences. "Days mismatched" is the average number of days a hare\'s coat does not match the ground.</p>');
+ const cv=$('#hcv',el),g=cv.getContext('2d');let pos=[];
+ function place(){const r=rng(st.year*31+5);pos=st.h.map(()=>[20+r()*600,70+r()*150]);st.dpos=st.dead.map(()=>[20+r()*600,70+r()*150])}
+ function scene(dd,showDead){const s=hareSnow(st),snow=dd>=s[0]&&dd<s[1];
+  g.fillStyle=snow?'#f4f7fb':'#8b7a55';g.fillRect(0,0,640,230);g.fillStyle=snow?'#dfe8f3':'#a7c7e6';g.fillRect(0,0,640,60);
+  for(let i=0;i<9;i++){const x=30+i*75;g.fillStyle='#2e4a32';g.beginPath();g.moveTo(x,62);g.lineTo(x-16,100);g.lineTo(x+16,100);g.fill();g.fillStyle=snow?'#fff':'#2e4a32';g.beginPath();g.moveTo(x,58);g.lineTo(x-7,72);g.lineTo(x+7,72);g.fill()}
+  const hare=(p,white,a)=>{g.globalAlpha=a;g.fillStyle=white?'#ffffff':'#7a5a3a';g.strokeStyle=white?'#b8c2cc':'#5a4029';g.lineWidth=1;g.beginPath();g.ellipse(p[0],p[1],9,6,0,0,7);g.fill();g.stroke();g.beginPath();g.ellipse(p[0]+8,p[1]-5,4,4,0,0,7);g.fill();g.stroke();g.beginPath();g.ellipse(p[0]+9,p[1]-13,1.6,5,0,0,7);g.fill();g.stroke();g.globalAlpha=1};
+  st.h.forEach((x,i)=>{if(pos[i])hare(pos[i],dd>=x.w&&dd<x.b,1)});
+  if(showDead)st.dead.forEach((x,i)=>{const p=st.dpos[i],td=x.td;if(!p)return;if(dd<td)hare(p,dd>=x.w&&dd<x.b,1);else if(dd<td+20){g.fillStyle='#b3261e';g.font='bold 14px system-ui';g.fillText('✖',p[0]-5,p[1]+5)}});
+  g.fillStyle=snow?'#17312c':'#fff';g.font='bold 15px system-ui';g.fillText(hareDate(dd)+(snow?' · snow on the ground':' · no snow'),12,24);
+ }
+ function charts(){const s=hareSnow(st),X=d=>10+d/365*300;let h='<text x="10" y="12" font-size="10" font-weight="700">This year: snow vs white coats</text><rect x="10" y="20" width="300" height="22" fill="#a08a5c" rx="3"/><rect x="'+X(s[0])+'" y="20" width="'+(X(s[1])-X(s[0]))+'" height="22" fill="#e9f0f8" stroke="#9fb4d8" rx="3"/><text x="'+((X(s[0])+X(s[1]))/2)+'" y="35" font-size="9" text-anchor="middle">snow on the ground</text>';
+  if(st.h.length){const W=st.h.map(x=>x.w).sort((a,b)=>a-b),B=st.h.map(x=>x.b).sort((a,b)=>a-b),q=(A,f)=>A[Math.floor(f*(A.length-1))];
+   h+='<rect x="'+X(q(W,.5))+'" y="52" width="'+(X(q(B,.5))-X(q(W,.5)))+'" height="18" fill="#fff" stroke="#17312c" rx="3"/><line x1="'+X(q(W,.1))+'" x2="'+X(q(W,.9))+'" y1="61" y2="61" stroke="#c0392b" stroke-width="3"/><line x1="'+X(q(B,.1))+'" x2="'+X(q(B,.9))+'" y1="61" y2="61" stroke="#c0392b" stroke-width="3"/><text x="'+((X(q(W,.5))+X(q(B,.5)))/2)+'" y="65" font-size="9" text-anchor="middle">most hares white</text>';}
+  ['Sep','Dec','Mar','Jun'].forEach((m,i)=>h+='<text x="'+(10+i*75)+'" y="85" font-size="9" fill="#586a64">'+m+'</text>');h+='<text x="10" y="102" font-size="9" fill="#586a64">Red bars: spread of turn-white and turn-brown dates (variation).</text>';
+  $('#hcal',el).innerHTML=h;
+  const H=st.hist,n=Math.max(10,H.length-1);let p='<text x="10" y="12" font-size="10" font-weight="700">Hare population by year</text><line x1="30" y1="100" x2="310" y2="100" stroke="#8a9a94"/><line x1="30" y1="18" x2="30" y2="100" stroke="#8a9a94"/><text x="2" y="24" font-size="9">60</text><text x="12" y="103" font-size="9">0</text>';
+  p+='<polyline fill="none" stroke="#2a7a4b" stroke-width="2.5" points="'+H.map((o,i)=>(30+i*280/n).toFixed(1)+','+(100-o.pop/60*80).toFixed(1)).join(' ')+'"/><text x="160" y="116" font-size="9" text-anchor="middle">years</text>';$('#hgr',el).innerHTML=p;}
+ function ui(){const s=hareSnow(st),last=st.hist[st.hist.length-1];$('#hy',el).textContent=st.year;$('#hp',el).textContent=st.h.length;$('#hm',el).textContent=st.h.length?last.mis:'—';$('#hsn',el).textContent=hareDate(s[0])+' – '+hareDate(s[1]);
+  el.querySelectorAll('[data-hc]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.hc===st.clim));el.querySelectorAll('[data-hv]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.hv===st.vary));
+  const m=$('#hmsg',el);if(!st.h.length){m.className='alert bad';m.textContent='The hares have disappeared from this area after '+st.year+' years. None had coat timing that matched the new snow season well enough.'}
+  else if(st.year&&last.surv!==undefined){m.className='alert info';m.textContent='Year '+st.year+': '+last.surv+' of '+last.before+' hares survived to spring and raised young. Hares that were mismatched for many days were more likely to be caught.'}
+  else{m.className='alert info';m.textContent='Watch one year to see which hares survive. Then try a warmer climate with low and high variation.'}
+  ['#h1','#h10','#hrec'].forEach(s=>$(s,el).disabled=!st.h.length&&s!=='#hrec');charts()}
+ function frame(ts){if(!cv.isConnected)return;const dt=Math.min(.05,(ts-last)/1000||0);last=ts;if(anim){day+=dt*90;if(day>=365){anim=null;day=0;if(st.next){st.h=st.next;st.next=null}const r=rng(st.year*31+5);pos=st.h.map(()=>[20+r()*600,70+r()*150]);scene(0,false);ui();return requestAnimationFrame(frame)}scene(day,true)}requestAnimationFrame(frame)}
+ function runOne(animate){if(!st.h.length)return;const before=st.h.slice(),bpos=pos.slice(),s=hareSnow(st);hareYear(st);
+  if(animate){st.dead.forEach(x=>{const mis=[];for(let d=0;d<365;d+=3){const snow=d>=s[0]&&d<s[1],white=d>=x.w&&d<x.b;if(snow!==white)mis.push(d)}x.td=mis.length?mis[Math.floor(Math.random()*mis.length)]:Math.random()*365});
+   const survSet=new Set(before.filter(x=>!st.dead.includes(x)));st.dpos=st.dead.map(x=>bpos[before.indexOf(x)]);const keep=st.h;st.h=before.filter(x=>survSet.has(x));pos=st.h.map(x=>bpos[before.indexOf(x)]);st.next=keep;anim=1;day=0;$('#hmsg',el).className='alert info';$('#hmsg',el).textContent='Watching year '+st.year+'… hares that do not match the ground are easier for predators to spot.'}
+  else{place();ui()}}
+ el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||anim)return;const d=b.dataset;
+  if(d.hc||d.hv){st=hareNew(d.hc||st.clim,d.hv||st.vary,seed);place();scene(0,false);ui()}
+  else if(b.id==='h1')runOne(true);
+  else if(b.id==='h10'){for(let i=0;i<10&&st.h.length;i++)hareYear(st);place();scene(0,false);ui()}
+  else if(b.id==='hrs'){seed++;st=hareNew(st.clim,st.vary,seed);place();scene(0,false);ui()}
+  else if(b.id==='hrec'){const last=st.hist[st.hist.length-1],s=hareSnow(st),avg=k=>st.h.length?hareDate(st.h.reduce((a,x)=>a+x[k],0)/st.h.length):'—';
+   nbAdd('g6-hare','Snowshoe Hare Survival',['Year','Climate','Variation','Hares','Days mismatched','Snow season','Average turns white','Average turns brown'],[st.year,HS.clim[st.clim][0],HS.vary[st.vary][0],st.h.length,st.h.length?last.mis:'—',hareDate(s[0])+' – '+hareDate(s[1]),avg('w'),avg('b')])}});
+ place();scene(0,false);ui();requestAnimationFrame(frame);
+}
+
+const BENCH={'u1-5':[['body','Body Systems Simulator',labBody],['breath','Breathing Machine',labBreath],['react','Reaction-Time Lab',labReact]],
+ 'u1-6':[['web','Food-Web Simulator',labWeb],['quad','Quadrat Sampler',labQuad],['hare','Snowshoe Hare Survival',labHare]],
+ 'u2-5':[['matter','',labMatter]],'u2-6':[['circ','',labCircuit]],'u3-5':[['bridge','',labBridge]],'u3-6':[['flight','',labFlight]],'u4-5':[['grid','',labGrid]],'u4-6':[['space','',labSpace]]};
+const EXTRA={'u1-5':{1:[['cases',labCases]]},'u1-6':{0:[['key',labKey]]}};
+function benchIdx(k){return Math.min((S.bench||{})[k]||0,BENCH[k].length-1)}
+function extraHTML(u,st){return(((EXTRA[u.id+'-'+S.track]||{})[st])||[]).map(a=>'<div class="card"><div data-act="'+a[0]+'"></div></div>').join('')}
+function nbRow(id,title,cols,row){nbAdd(id,title,cols,row);return row}
 
 if(typeof document!=='undefined')boot();
 if(typeof module!=='undefined')module.exports={webNew,webStep,webHealth,circSolve,matterT,C,UNITS,T,topts,trussForces,bridgeModel,flightModel,gridModel,sunInfo,moonName,GR};
